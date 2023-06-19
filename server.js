@@ -6,6 +6,7 @@ app.use(cors());
 app.use(express.json());
 require('dotenv').config();
 
+//MongoDB connection
 connectDB();
 
 const port = process.env.PORT || 3000;
