@@ -6,17 +6,17 @@ const registerUser = async (req, res) => {
     const { username, password } = req.body;
     try {
         const hashed = bcrypt.hashSync(password, 10);
-        const result = await User.create({
-            userName: username,
-            password: hashed,
-            roles: {
-                Admin: true
-            }
+        // const result = await User.create({
+        //     userName: username,
+        //     password: hashed,
+        //     roles: {
+        //         Admin: true
+        //     }
 
-        })
+        // })
         res.json({
             message: "hello from createUser",
-            data: result
+            data: hashed
         })
     } catch (error) {
 
