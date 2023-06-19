@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const userRouter = require('./routes/userRoute');
+const registerRouter = require('./routes/registerRoute');
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/', userRouter);
+app.use('/register', registerRouter);
 
 //MongoDB connection
 connectDB();
