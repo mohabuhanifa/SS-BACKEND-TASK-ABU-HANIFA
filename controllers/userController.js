@@ -1,4 +1,4 @@
-const createUser = async (req, res) => {
+const registerUser = async (req, res) => {
     console.log(req.body);
     try {
         res.json({
@@ -10,5 +10,5 @@ const createUser = async (req, res) => {
 }
 
 module.exports = {
-    createUser
+    registerUser
 }
