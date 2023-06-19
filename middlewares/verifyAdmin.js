@@ -6,11 +6,10 @@ const verifyAdmin = async (req, res, next) => {
     }).exec()
 
     if (user?.roles?.Admin) {
-        next()
+        next();
     } else {
-        res.status(403).send('Forbidden - Access denied')
+        res.status(403).send('Forbidden - Access denied');
     }
-    console.log(user);
 }
 
 module.exports = verifyAdmin;
