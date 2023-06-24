@@ -1,5 +1,20 @@
 const Movie = require("../models/Movie");
 
+const getAllMovies = async (req, res) => {
+  try {
+    const movies = await Movie.find({});
+    res.status(200).json({
+      data: movies,
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      message: error,
+      success: false,
+    });
+  }
+};
+
 const createMovie = async (req, res) => {
   const movie = req.body;
   try {
@@ -28,4 +43,5 @@ const createMovie = async (req, res) => {
 
 module.exports = {
   createMovie,
+  getAllMovies,
 };
