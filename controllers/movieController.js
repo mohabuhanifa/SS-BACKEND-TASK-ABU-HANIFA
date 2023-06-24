@@ -30,15 +30,22 @@ const getSingleMovie = async (req, res) => {
   }
 };
 
-const deleteMovie = async (req, res) => {
+const deleteSingleMovie = async (req, res) => {
   try {
     const movie = await Movie.findByIdAndDelete(req.params.id);
-    console.log(movie);
-    res.status(200).json({
-      data: movie,
-      success: true,
-      message: `Movie ${movie.name} deleted successfully`,
-    });
+
+    if (movie?.name) {
+      res.status(200).json({
+        success: true,
+        message: `${movie.name} Movie deleted successfully`,
+      });
+
+    } else {
+      res.status(404).json({
+        message: `Movie with id ${req.params.id} not found`,
+        success: false,
+      });
+    }
   } catch (error) {
     res.json({
       message: error,
@@ -77,5 +84,5 @@ module.exports = {
   createMovie,
   getAllMovies,
   getSingleMovie,
-  deleteMovie,
+  deleteSingleMovie
 };
