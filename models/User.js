@@ -9,20 +9,24 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+
     roles: {
       User: {
         type: Boolean,
         default: true,
       },
+
       Admin: {
         type: Boolean,
         default: false,
       },
     },
+
     password: {
       type: String,
       required: true,
     },
+    
     refreshToken: String,
   },
   {

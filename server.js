@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
-const registerRouter = require("./routes/registerRoute");
-const loginRouter = require("./routes/logInRoutes");
+const authRouter = require("./routes/authRoute");
+const movieRouter = require("./routes/movieRoute");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
 const app = express();
@@ -11,8 +11,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use("/register", registerRouter);
-app.use("/login", loginRouter);
+
+//api routes
+app.use("/api", authRouter);
+app.use("/api/movies", movieRouter);
 
 //MongoDB connection
 connectDB();

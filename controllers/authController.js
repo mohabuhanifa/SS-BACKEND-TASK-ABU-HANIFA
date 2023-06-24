@@ -72,7 +72,7 @@ const handleLogin = async (req, res) => {
         .status(200)
         .json({
           message: "Login successful",
-          data: { ...otherDetails },
+          data: { user: user.userName },
         });
     }
   } catch (error) {
