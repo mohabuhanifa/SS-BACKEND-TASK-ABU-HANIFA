@@ -30,6 +30,23 @@ const getSingleMovie = async (req, res) => {
   }
 };
 
+const deleteMovie = async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndDelete(req.params.id);
+    console.log(movie);
+    res.status(200).json({
+      data: movie,
+      success: true,
+      message: `Movie ${movie.name} deleted successfully`,
+    });
+  } catch (error) {
+    res.json({
+      message: error,
+      success: false,
+    });
+  }
+};
+
 const createMovie = async (req, res) => {
   const movie = req.body;
   try {
@@ -60,4 +77,5 @@ module.exports = {
   createMovie,
   getAllMovies,
   getSingleMovie,
+  deleteMovie,
 };
