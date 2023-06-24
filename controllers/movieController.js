@@ -30,6 +30,24 @@ const getSingleMovie = async (req, res) => {
   }
 };
 
+const updateSingleMovie = async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      success: true,
+      message: `${req.body.name} Movie updated successfully`,
+    });
+  } catch (error) {
+    res.json({
+      message: error,
+      success: false,
+    });
+  }
+};
+
 const deleteSingleMovie = async (req, res) => {
   try {
     const movie = await Movie.findByIdAndDelete(req.params.id);
@@ -39,7 +57,6 @@ const deleteSingleMovie = async (req, res) => {
         success: true,
         message: `${movie.name} Movie deleted successfully`,
       });
-
     } else {
       res.status(404).json({
         message: `Movie with id ${req.params.id} not found`,
@@ -84,5 +101,6 @@ module.exports = {
   createMovie,
   getAllMovies,
   getSingleMovie,
-  deleteSingleMovie
+  deleteSingleMovie,
+  updateSingleMovie,
 };
