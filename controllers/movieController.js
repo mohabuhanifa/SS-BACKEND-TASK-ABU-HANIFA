@@ -15,6 +15,21 @@ const getAllMovies = async (req, res) => {
   }
 };
 
+const getSingleMovie = async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
+    res.status(200).json({
+      data: movie,
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      message: error,
+      success: false,
+    });
+  }
+};
+
 const createMovie = async (req, res) => {
   const movie = req.body;
   try {
@@ -44,4 +59,5 @@ const createMovie = async (req, res) => {
 module.exports = {
   createMovie,
   getAllMovies,
+  getSingleMovie,
 };
