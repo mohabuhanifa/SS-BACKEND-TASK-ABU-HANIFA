@@ -8,6 +8,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lowercase: true,
     },
 
     roles: {
@@ -15,7 +17,6 @@ const userSchema = new Schema(
         type: Boolean,
         default: true,
       },
-
       Admin: {
         type: Boolean,
         default: false,
@@ -26,8 +27,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    
-    refreshToken: String,
   },
   {
     timestamps: true,

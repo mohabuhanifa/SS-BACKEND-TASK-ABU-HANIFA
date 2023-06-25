@@ -11,12 +11,12 @@ const verifyJWT = require("../middlewares/verifyJWT");
 
 const router = require("express").Router();
 
-router.route("/").post(verifyJWT, createMovie).get(getAllMovies);
+router.route("/").post(verifyAdmin, verifyJWT, createMovie).get(getAllMovies);
 
 router
   .route("/:id")
   .get(getSingleMovie)
-  .delete(verifyAdmin, deleteSingleMovie)
-  .patch(verifyAdmin, updateSingleMovie);
+  .delete(verifyAdmin, verifyJWT, deleteSingleMovie)
+  .patch(verifyAdmin, verifyJWT, updateSingleMovie);
 
 module.exports = router;

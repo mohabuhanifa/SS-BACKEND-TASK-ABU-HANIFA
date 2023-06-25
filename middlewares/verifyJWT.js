@@ -16,10 +16,9 @@ const verifyJWT = (req, res, next) => {
     }
 
     const verify = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(verify);
 
     const { isAdmin } = verify;
-
-    console.log(isAdmin);
 
     if (isAdmin) {
       next();

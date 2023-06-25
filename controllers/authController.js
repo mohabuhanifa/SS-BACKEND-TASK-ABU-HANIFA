@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
 
     if (duplicate) {
       return res.json({
-        message: `User with username ${username} already exists`,
+        message: `User ${username} already exists`,
       });
     }
 
@@ -25,14 +25,15 @@ const registerUser = async (req, res) => {
       },
     });
 
-    const { password, ...otherDetails } = result._doc;
-
     res.json({
       message: `User created with username ${result.userName}`,
-      data: { ...otherDetails },
+      data: { user: result.userName },
     });
   } catch (error) {
-    res.send(error);
+    res.send({
+      success: false,
+      message: message,
+    });
   }
 };
 
@@ -56,8 +57,6 @@ const handleLogin = async (req, res) => {
       res.status(403).send({ success: false, message: "Wrong password" });
       return;
     } else {
-      const { password, ...otherDetails } = user._doc;
-
       const token = await jwt.sign(
         {
           userName: user.userName,
