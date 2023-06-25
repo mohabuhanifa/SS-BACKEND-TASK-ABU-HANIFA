@@ -7,10 +7,11 @@ const {
 } = require("../controllers/movieController");
 
 const verifyAdmin = require("../middlewares/verifyAdmin");
+const verifyJWT = require("../middlewares/verifyJWT");
 
 const router = require("express").Router();
 
-router.route("/").post(createMovie).get(getAllMovies);
+router.route("/").post(verifyJWT, createMovie).get(getAllMovies);
 
 router
   .route("/:id")

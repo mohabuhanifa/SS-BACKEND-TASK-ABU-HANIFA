@@ -38,26 +38,27 @@ const registerUser = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   try {
-    const user = await User.findOne({ userName: req.body.username });
+    const user = await User.findOne({ userName: req.body.username }).exec();
 
     if (!user) {
-      return res.json({
+      res.json({
         message: "User not found",
       });
+      return;
     }
 
-    const match = await bcrypt.compare(req.body.password, user.password);
+    const isValidPass = await bcrypt.compare(
+      req?.body?.password,
+      user?.password
+    );
 
-    if (!match) {
-      return res.json({
-        message: "Wrong password",
-      });
-    }
-
-    if (user && match) {
+    if (!isValidPass) {
+      res.status(403).send({ success: false, message: "Wrong password" });
+      return;
+    } else {
       const { password, ...otherDetails } = user._doc;
 
-      const token = jwt.sign(
+      const token = await jwt.sign(
         {
           userName: user.userName,
           isAdmin: user.roles.Admin,
@@ -65,11 +66,10 @@ const handleLogin = async (req, res) => {
         process.env.JWT_SECRET
       );
 
-      return res
+      res
         .cookie("accessToken", token, {
           httpOnly: true,
         })
-        .status(200)
         .json({
           message: "Login successful",
           data: { user: user.userName },
