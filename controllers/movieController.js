@@ -18,10 +18,17 @@ const getAllMovies = async (req, res) => {
 const getSingleMovie = async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
-    res.status(200).json({
-      data: movie,
-      success: true,
-    });
+    if (movie) {
+      res.status(200).json({
+        data: movie,
+        success: true,
+      });
+    } else {
+      res.status(404).json({
+        message: `Movie with id ${req.params.id} not found`,
+        success: false,
+      });
+    }
   } catch (error) {
     res.json({
       message: error,
@@ -32,13 +39,15 @@ const getSingleMovie = async (req, res) => {
 
 const updateSingleMovie = async (req, res) => {
   try {
-    const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
     res.status(200).json({
       success: true,
-      message: `${req.body.name} Movie updated successfully`,
+      message: `${updatedMovie.name} Movie updated successfully`,
+      data: updatedMovie,
     });
   } catch (error) {
     res.json({

@@ -7,7 +7,7 @@ const verifyJWT = (req, res, next) => {
 
     if (!token) {
       res.send({
-        message: "jwt must be provided",
+        message: "jwt cookie must be provided",
         status: "Unauthorized - Access denied",
         success: false,
       });
@@ -15,10 +15,9 @@ const verifyJWT = (req, res, next) => {
       return;
     }
 
-    const verify = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(verify);
+    const user = jwt.verify(token, process.env.JWT_SECRET);
 
-    const { isAdmin } = verify;
+    const { isAdmin } = user;
 
     if (isAdmin) {
       next();
